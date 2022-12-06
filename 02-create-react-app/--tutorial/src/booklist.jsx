@@ -3,7 +3,7 @@ import Book from "./Book";
 
 const BookList = () => {
   return (
-    <section className="bookList">
+    <section className="booklist">
       {books.map((book) => {
         return <Book key={book.id} {...book} />;
       })}
