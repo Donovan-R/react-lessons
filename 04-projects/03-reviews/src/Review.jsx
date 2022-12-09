@@ -16,7 +16,7 @@ const Review = () => {
       checkIndex = newIndex;
     } else if (newIndex < reviews.length - 1) {
       checkIndex = newIndex + 1;
-    } else if (newIndex < 0) {
+    } else {
       checkIndex = newIndex - 1;
     }
     return checkIndex;
