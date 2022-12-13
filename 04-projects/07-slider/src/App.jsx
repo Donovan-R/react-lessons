@@ -31,7 +31,6 @@ const App = () => {
               if (indexPers === index) {
                 position = "activeSlide";
               }
-              console.log(position, index, { id }, { index });
               if (
                 index === indexPers - 1 ||
                 (indexPers === 0 && index === persons.length - 1)
