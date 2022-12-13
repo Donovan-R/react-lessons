@@ -12,7 +12,7 @@ const UseEffectCleanup = () => {
       window.removeEventListener("resize", checkSize);
     };
     // le return appelle le clean up nous ne la nommons pas directement
-    // le resize est un evant comme un click par exemple
+    // le resize est un event comme un click par exemple
   });
 
   return (
