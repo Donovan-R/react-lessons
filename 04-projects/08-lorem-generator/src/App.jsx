@@ -6,9 +6,9 @@ const App = () => {
   const [text, setText] = useState([]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (count <= 8 && count > 0) {
-      setText(data.slice(0, count));
-    } else if (count <= 0) {
+    if (Number(count) <= 8 && Number(count) > 0) {
+      setText(data.slice(0, Number(count)));
+    } else if (Number(count) <= 0) {
       setText(data.slice(0, 1));
     } else {
       setText(data.slice(0, 8));
