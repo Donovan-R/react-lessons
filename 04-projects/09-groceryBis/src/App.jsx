@@ -2,9 +2,24 @@ import React, { useState, useEffect } from "react";
 import List from "./List";
 import Alert from "./Alert";
 
+const getLocalStorage = () => {
+  const list = localStorage.getItem("list");
+  if (list === null || list === undefined) {
+    return [];
+  } else {
+    return JSON.parse(list);
+  }
+};
+
 const App = () => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(getLocalStorage());
   const [item, setItem] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [editId, setEditId] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(items));
+  }, [items]);
 
   // les alertes
 
@@ -37,64 +52,39 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const oneItem = {
-      id: new Date().getTime().toString(),
-      item,
-    };
-    setItems([...items, oneItem]);
-    showAlert(true, "success", "élément ajouté");
-    setIsEditing(false);
-    setEditId(null);
-    setItem("");
+
+    if (item) {
+      const oneItem = {
+        id: new Date().getTime().toString(),
+        item,
+      };
+      setItems([...items, oneItem]);
+      showAlert(true, "success", "élément ajouté");
+      if (isEditing) {
+        console.log(editId);
+        const newTab = items.map((oneItem) =>
+          oneItem.id === editId ? { ...oneItem, item } : oneItem
+        );
+        setItems(newTab);
+        setIsEditing(false);
+        setEditId(null);
+      }
+
+      setItem("");
+    } else {
+      showAlert(true, "danger", "saisie non valide");
+    }
   };
 
   // éditer
-  const [isEditing, setIsEditing] = useState(false);
-  const [editId, setEditId] = useState(null);
 
   const editItem = (id) => {
     setIsEditing(true);
     setEditId(id);
-    const newItem = items.find((item) => item.id === id).item;
-    setItem(newItem);
+    const newItem = items.find((item) => item.id === id);
+    setItem(newItem.item);
     showAlert(true, "success", "élément prêt à être modifié");
-    setItems(items.map((item) => (item.id !== id ? item : newItem)));
   };
-
-  //******* storage d'avant
-
-  // function getLocalStorage() {
-  //   const list = localStorage.getItem("list");
-  //   if (list === null || list === undefined) {
-  //     return [];
-  //   } else {
-  //     return JSON.parse(list);
-  //   }
-  // }
-
-  // function addToLocalStorage(id, value) {
-  //   const items = getLocalStorage();
-  //   const item = { id, value };
-  //   items.push(item);
-  //   localStorage.setItem("list", JSON.stringify(items));
-  // }
-
-  // function removeFromLocalStorage(id) {
-  //   const items = getLocalStorage();
-  //   const out = items.filter((item) => item.id !== id);
-  //   localStorage.setItem("list", JSON.stringify(out));
-  // }
-
-  // function editLocalStorage(id, value) {
-  //   const items = getLocalStorage();
-  //   const newItems = items.map(function (item) {
-  //     if (item.id === id) {
-  //       item.value = value;
-  //     }
-  //     return item;
-  //   });
-  //   localStorage.setItem("list", JSON.stringify(newItems));
-  // }
 
   return (
     <section className="section-center">
