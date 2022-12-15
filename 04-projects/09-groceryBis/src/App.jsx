@@ -65,6 +65,7 @@ const App = () => {
         const newTab = items.map((oneItem) =>
           oneItem.id === editId ? { ...oneItem, item } : oneItem
         );
+        showAlert(true, "success", "élément modifié");
         setItems(newTab);
         setIsEditing(false);
         setEditId(null);
