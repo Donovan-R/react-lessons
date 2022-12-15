@@ -2,7 +2,7 @@ import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineDeleteForever } from "react-icons/md";
 
-const List = ({ items, removeItem }) => {
+const List = ({ items, removeItem, editItem }) => {
   return (
     <div className="grocery-list">
       {items.map((oneItem) => {
@@ -12,7 +12,7 @@ const List = ({ items, removeItem }) => {
             <article className="grocery-item" key={id}>
               <p className="title">{item}</p>
               <div className="btn-container">
-                <button className="edit-btn" onClick={() => console.log(id)}>
+                <button className="edit-btn" onClick={() => editItem(id)}>
                   <FaEdit />
                 </button>
                 <button className="delete-btn" onClick={() => removeItem(id)}>
@@ -22,7 +22,7 @@ const List = ({ items, removeItem }) => {
             </article>
           );
         } else {
-          ("");
+          return "";
         }
       })}
     </div>

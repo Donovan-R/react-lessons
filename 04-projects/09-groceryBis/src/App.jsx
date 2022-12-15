@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 import List from "./List";
 import Alert from "./Alert";
 
-let efitFlag = false;
-let editId = "";
-let editElement = "article";
-
 const App = () => {
   const [items, setItems] = useState([]);
   const [item, setItem] = useState("");
@@ -14,28 +10,25 @@ const App = () => {
 
   const [alert, setAlert] = useState({
     show: false,
-    msg: "",
     type: "",
+    msg: "",
   });
 
-  const showAlert = () => {
-    setAlert(true, "haha", "alert");
-    setTimeout(() => {
-      showAlert();
-    }, 3000);
+  const showAlert = (show = false, type = "", msg = "") => {
+    setAlert({ show, type, msg });
+    // ...alert pour ne modifier que ce que nous voulons
   };
 
   // retirer un article et tous
   const removeItem = (id) => {
     const newItems = items.filter((item) => (item.id !== id ? item : ""));
     setItems(newItems);
-    showAlert(true, "demande ok", "alert");
-    console.log(alert);
+    showAlert(true, "danger", "élément supprimé");
   };
 
   const clearList = () => {
     setItems([]);
-    showAlert();
+    showAlert(true, "danger", "liste supprimée");
   };
 
   // fin retrait
@@ -49,12 +42,24 @@ const App = () => {
       item,
     };
     setItems([...items, oneItem]);
+    showAlert(true, "success", "élément ajouté");
+    setIsEditing(false);
+    setEditId(null);
     setItem("");
   };
 
   // éditer
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
+
+  const editItem = (id) => {
+    setIsEditing(true);
+    setEditId(id);
+    const newItem = items.find((item) => item.id === id).item;
+    setItem(newItem);
+    showAlert(true, "success", "élément prêt à être modifié");
+    setItems(items.map((item) => (item.id !== id ? item : newItem)));
+  };
 
   //******* storage d'avant
 
@@ -94,7 +99,9 @@ const App = () => {
   return (
     <section className="section-center">
       <form action="" className="grocery-form" onSubmit={handleSubmit}>
-        <Alert {...alert} removeAlert={showAlert} list={items} />
+        {alert.show && (
+          <Alert {...alert} removeAlert={showAlert} list={items} />
+        )}
         <h3> Faites vos emplettes avec DonoMarket</h3>
         <div className="form-control">
           <input
@@ -103,11 +110,13 @@ const App = () => {
             value={item}
             onChange={(e) => setItem(e.target.value)}
           />
-          <button className="submit-btn">ajouter l'article</button>
+          <button className="submit-btn">
+            {isEditing ? "modifier l'élément" : "ajouter l'élément"}
+          </button>
         </div>
       </form>
       <div className="grocery-container">
-        <List items={items} removeItem={removeItem} />
+        <List items={items} removeItem={removeItem} editItem={editItem} />
         {items.length > 1 ? (
           <button className="clear-btn" onClick={clearList}>
             Tout supprimer
