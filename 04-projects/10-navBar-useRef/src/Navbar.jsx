@@ -12,7 +12,7 @@ const Navbar = () => {
     const linksHeight = linksRef.current.getBoundingClientRect().height;
 
     if (isOpen) {
-      contRef.current.style.height = "200px";
+      contRef.current.style.height = linksHeight + "px";
     } else {
       contRef.current.style.height = "0px";
     }
