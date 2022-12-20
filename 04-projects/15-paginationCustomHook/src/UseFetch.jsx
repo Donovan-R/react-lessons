@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
-
-// const url = "https://course-api.com/javascript-store-products";
+import paginate from "./utils";
 
 const useFetch = (url) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
 
-  const getData = async (url) => {
+  const getFollowers = async (url) => {
+    setIsLoading(true);
+
     try {
-      const response = await fetch(url);
-      const data = await response.json();
-      setData(data);
+      const resp = await fetch(url);
+      const data = await resp.json();
+      setData(paginate(data));
       setIsLoading(false);
     } catch (error) {
+      console.log(error);
       setIsLoading(false);
-      console.log(erreur);
     }
   };
 
   useEffect(() => {
-    getData(url);
+    getFollowers(url);
   }, [url]);
-
   return { isLoading, data };
 };
 

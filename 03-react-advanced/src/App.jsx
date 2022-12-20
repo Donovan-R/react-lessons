@@ -1,8 +1,8 @@
-import UseEffectCleanup from "./tutorial/08-custom-hooks/02-useFetch";
+import Index from "./tutorial/09-useReducer/01-index";
 const App = () => {
   return (
     <div className="container">
-      <UseEffectCleanup />
+      <Index />
     </div>
   );
 };
