@@ -1,10 +1,10 @@
-import Index from "./tutorial/09-useReducer/01-index";
+import ReactRouterSetup from "./tutorial/12-react-router/pages";
+
 const App = () => {
   return (
     <div className="container">
-      <Index />
+      <ReactRouterSetup />
     </div>
   );
 };
-
 export default App;
