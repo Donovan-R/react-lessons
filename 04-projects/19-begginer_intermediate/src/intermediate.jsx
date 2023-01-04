@@ -10,7 +10,6 @@ const Intermediate = () => {
     try {
       const response = await fetch(url);
       const { results: data } = await response.json();
-      console.log(data);
       setUsers(data);
       setIsLoading(false);
     } catch (error) {
@@ -39,38 +38,40 @@ const Intermediate = () => {
       <div className="users20">
         <table className="locationInfos">
           <thead>
-            <th>
-              <button
-                id="name"
-                onClick={(e) => console.log(e.currentTarget.id)}
-              >
-                name
-              </button>
-            </th>
-            <th>
-              <button onClick={() => console.log("hello")}>country</button>
-            </th>
-            <th>
-              <button onClick={() => console.log("hello")}>postcode</button>
-            </th>
-            <th>
-              <button onClick={() => console.log("hello")}>state</button>
-            </th>
-            <th>
-              <button onClick={() => console.log("hello")}>city</button>
-            </th>
-            <th>
-              <button
-                id="street"
-                onClick={() =>
-                  console.log(
-                    (document.documentElement.className = "street").innerHTML
-                  )
-                }
-              >
-                street
-              </button>
-            </th>
+            <tr>
+              <th>
+                <button
+                  id="name"
+                  onClick={(e) => console.log(e.currentTarget.id)}
+                >
+                  name
+                </button>
+              </th>
+              <th>
+                <button onClick={() => console.log("hello")}>country</button>
+              </th>
+              <th>
+                <button onClick={() => console.log("hello")}>postcode</button>
+              </th>
+              <th>
+                <button onClick={() => console.log("hello")}>state</button>
+              </th>
+              <th>
+                <button onClick={() => console.log("hello")}>city</button>
+              </th>
+              <th>
+                <button
+                  id="street"
+                  onClick={() =>
+                    console.log(
+                      (document.documentElement.className = "street").innerHTML
+                    )
+                  }
+                >
+                  street
+                </button>
+              </th>
+            </tr>
           </thead>
           <tbody>
             {users.map((item, index) => {
